@@ -34,6 +34,13 @@ public class GrowableStringArrayList  {
 		return myStorage[index];
 	}
 	
+	public String set(int index, String s) {
+		rangeCheck(index);
+		String old = myStorage[index];
+		myStorage[index] = s;
+		return old;
+	}
+	
 	private void rangeCheck(int index) {
 		if (index < 0 || index >= mySize) {
 			throw new IndexOutOfBoundsException("index out of bounds " + index

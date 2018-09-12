@@ -11,6 +11,7 @@ public class ConformingArrayList<E> implements List<E> {
 		mySize = 0;
 	}
 	
+	@Override
 	public boolean add(E s) {
 		checkSize();
 		myStorage[mySize] = s;
@@ -18,6 +19,7 @@ public class ConformingArrayList<E> implements List<E> {
 		return true;
 	}
 	
+	@Override
 	public void add(int index, E s) {
 		if (index < 0 || index > mySize) {
 			throw new IndexOutOfBoundsException("bad index in add "+index);
@@ -28,6 +30,7 @@ public class ConformingArrayList<E> implements List<E> {
 		mySize++;
 	}
 	
+	@Override
 	public int size() {
 		return mySize;
 	}
@@ -38,14 +41,14 @@ public class ConformingArrayList<E> implements List<E> {
 		return (E) myStorage[index];
 	}
 	
-	public void rangeCheck(int index) {
+	private void rangeCheck(int index) {
 		if (index < 0 || index >= mySize) {
 			throw new IndexOutOfBoundsException("index out of bounds " + index
 					+ " of " + mySize);
 		}
 	}
 	
-	public void checkSize() {
+	private void checkSize() {
 		if (mySize >= myStorage.length) {
 			Object[] storage = new Object[myStorage.length*2];
 			System.arraycopy(myStorage, 0, storage, 0, myStorage.length);
@@ -60,7 +63,9 @@ public class ConformingArrayList<E> implements List<E> {
 
 	@Override
 	public boolean contains(Object o) {
-		// TODO Auto-generated method stub
+		for(E elt : this) {
+			if (elt.equals(o)) return true;
+		}
 		return false;
 	}
 
@@ -84,20 +89,21 @@ public class ConformingArrayList<E> implements List<E> {
 
 	@Override
 	public boolean remove(Object o) {
-		// TODO Auto-generated method stub
-		return false;
+		throw new NoSuchMethodError("no remove");
 	}
 
 	@Override
 	public boolean containsAll(Collection<?> c) {
-		// TODO Auto-generated method stub
-		return false;
+		throw new NoSuchMethodError("no containsAll");
 	}
 
 	@Override
 	public boolean addAll(Collection<? extends E> c) {
-		// TODO Auto-generated method stub
-		return false;
+		int osize = size();
+		for(E element : c) {
+			this.add(element);
+		}
+		return osize != size();
 	}
 
 	@Override
@@ -143,8 +149,12 @@ public class ConformingArrayList<E> implements List<E> {
 
 	@Override
 	public int lastIndexOf(Object o) {
-		// TODO Auto-generated method stub
-		return 0;
+		for(int dex = size()-1; dex >= 0; dex--) {
+			if (get(dex).equals(o)) {
+				return dex;
+			}
+		}
+		return -1;
 	}
 
 	@Override
