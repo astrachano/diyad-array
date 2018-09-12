@@ -14,7 +14,11 @@ public class ArrayBenchmark {
 	
 	public static void main(String[] args){
 		
-		for(int size = 100000; size <= 2000000; size += 100000){
+		int start = 10000;
+		int end = 100000;
+		int incr = 10000;
+		
+		for(int size = start; size <= end; size += incr){
 			double time = addStrings(size);
 			System.out.printf("%d,%2.3f\n",size,time);
 		}
